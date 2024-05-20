@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1251660433148795186}
   - component: {fileID: 8917541747449080447}
   - component: {fileID: 4145195878775130363}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Destroyer
   m_TagString: SpawnPoint
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
@@ -1696,7 +1696,7 @@ GameObject:
   - component: {fileID: 8703448893656622783}
   - component: {fileID: 1082893975858264124}
   - component: {fileID: 6260843995976197772}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Left SpawnPoint
   m_TagString: SpawnPoint
   m_Icon: {fileID: 4162164826716764455, guid: 0000000000000000d000000000000000, type: 0}
@@ -1733,6 +1733,7 @@ MonoBehaviour:
   openingDirection: 4
   spawned: 0
   waitTime: 4
+  closedRoom: {fileID: 1812632243771289918, guid: cfd0cfa7173a37442a8630d2a3db2bdc, type: 3}
 --- !u!61 &1082893975858264124
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1815,6 +1816,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7894962653581760542}
   - component: {fileID: 3759250548647642293}
+  - component: {fileID: 3541691705824733785}
+  - component: {fileID: 7798365479481077923}
   m_Layer: 0
   m_Name: TL
   m_TagString: Untagged
@@ -1894,6 +1897,36 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &3541691705824733785
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7472117673532751651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 928b0f9b88e455f4383294a5c7ae9fb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enemies:
+  - {fileID: 7447932446496210787, guid: 5e42a38a507b09146985a264441d8ac2, type: 3}
+  _maxEnemies: 4
+  _minEnemies: 2
+  _spawnTopLeftCorner: {x: -7.59, y: 2.89, z: 0}
+  _spawnBottomRightCorner: {x: 7.59, y: -2.89, z: 0}
+--- !u!114 &7798365479481077923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7472117673532751651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c65416b4fd9c0654085861cd540ad035, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8518741639060472328
 GameObject:
   m_ObjectHideFlags: 0
@@ -1906,7 +1939,7 @@ GameObject:
   - component: {fileID: 4055382103626030731}
   - component: {fileID: 959279912611271751}
   - component: {fileID: 8897895641233955411}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Top SpawnPoint
   m_TagString: SpawnPoint
   m_Icon: {fileID: 4162164826716764455, guid: 0000000000000000d000000000000000, type: 0}
@@ -1943,6 +1976,7 @@ MonoBehaviour:
   openingDirection: 1
   spawned: 0
   waitTime: 4
+  closedRoom: {fileID: 1812632243771289918, guid: cfd0cfa7173a37442a8630d2a3db2bdc, type: 3}
 --- !u!61 &959279912611271751
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2027,8 +2061,6 @@ GameObject:
   - component: {fileID: 3321552372667732327}
   - component: {fileID: 2759793528836387874}
   - component: {fileID: 4753001689385746666}
-  - component: {fileID: 6965781172678853314}
-  - component: {fileID: 957534240195441922}
   m_Layer: 0
   m_Name: Walls
   m_TagString: Untagged
@@ -2768,73 +2800,3 @@ TilemapCollider2D:
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0
   m_UseDelaunayMesh: 0
---- !u!50 &6965781172678853314
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8700372308404844788}
-  m_BodyType: 2
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!66 &957534240195441922
-CompositeCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8700372308404844788}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_GeometryType: 0
-  m_GenerationType: 0
-  m_EdgeRadius: 0
-  m_ColliderPaths: []
-  m_CompositePaths:
-    m_Paths: []
-  m_VertexDistance: 0.0005
-  m_OffsetDistance: 0.00005
-  m_UseDelaunayMesh: 0
-  m_CompositeGameObject: {fileID: 8700372308404844788}

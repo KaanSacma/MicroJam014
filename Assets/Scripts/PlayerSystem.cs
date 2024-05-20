@@ -1,17 +1,19 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.SceneManagement;
 
 public class PlayerSystem : MonoBehaviour
 {
     [SerializeField] private Camera mainCamera;
     [SerializeField] private float multipleClickMultiplier = 0;
     [SerializeField] private float maxMultipleClickMultiplier = 2.0f;
+    [SerializeField] public GameObject grid;
+    [SerializeField] public GameObject roomTemplates;
+    [SerializeField] public GameObject EntryRoom;
     
     [Header("Player")]
     [SerializeField] private GameObject player;
+    [SerializeField] private Vector3 playerSpawnPosition;
     [SerializeField] private float speed = 5f;
     [SerializeField] private int ammo = 3;
     [SerializeField] private float health = 3f;
@@ -23,12 +25,14 @@ public class PlayerSystem : MonoBehaviour
     [SerializeField] private Transform playerCenter;
     [SerializeField] private float refillTime = 0.50f;
     [SerializeField] private float shootTime = 0.15f;
+    [SerializeField] private float shootCooldown = 0.5f;
     
     
     [Header("Bullet")]
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private float bulletSpeed;
     [SerializeField] private float destroyTime = 5.0f;
+    [SerializeField] public float bulletDamage = 0.5f;
     
     private Animator _playerAnimator;
     private SpriteRenderer _playerSpriteRenderer;
@@ -38,6 +42,9 @@ public class PlayerSystem : MonoBehaviour
     private bool _canShoot = true;
     private int _maxAmmo = 3;
     private float _maxHealth = 3f;
+    private float _currentShootCooldown = 0.0f;
+    private float _currentRefillTime = 0.0f;
+    private AnimationClip[] _playerAnimationClips;
     
     private void FlipPlayer()
     {
@@ -64,11 +71,13 @@ public class PlayerSystem : MonoBehaviour
     
     private IEnumerator RefillAmmo()
     {
+        _canShoot = false;
         _playerAnimator.SetBool("IsAmmoEmpty", true);
         
         yield return new WaitForSeconds(refillTime);
         
         _playerAnimator.SetBool("IsAmmoEmpty", false);
+        
         ammo = _maxAmmo;
         playerHud.UpdateAmmo((float)ammo / _maxAmmo);
         _canShoot = true;
@@ -81,17 +90,45 @@ public class PlayerSystem : MonoBehaviour
         
         FlipPlayer();
         _canShoot = false;
-        ammo--;
         _playerAnimator.SetBool("IsShooting", true);
+        player.GetComponent<AudioSource>().Play();
+   
+        
+        yield return new WaitForSeconds(shootTime);
+        
+        _playerAnimator.SetBool("IsShooting", false);
+        
         GameObject bullet = Instantiate(bulletPrefab, playerGun.position, Quaternion.identity);
         bullet.GetComponent<Rigidbody2D>().velocity = direction.normalized * bulletSpeed;
         Destroy(bullet, destroyTime);
         
-        yield return new WaitForSeconds(shootTime);
-        
-        _canShoot = true;
+        ammo--;
         playerHud.UpdateAmmo((float)ammo / _maxAmmo);
-        _playerAnimator.SetBool("IsShooting", false);
+        _canShoot = true;
+    }
+    
+    private IEnumerator SpawnBackPlayer()
+    {
+        player.transform.position = playerSpawnPosition;
+        health = _maxHealth;
+        ammo = _maxAmmo;
+        playerHud.UpdateAmmo((float)ammo / _maxAmmo);
+        playerHud.UpdateHealth(health / _maxHealth);
+        _playerAnimator.SetBool("IsDead", false);
+        
+        yield return new WaitForSeconds(0.1f);
+        
+        for (int i = 0; i < grid.transform.childCount; i++) {
+            if (grid.transform.GetChild(i).name.Contains("(Clone)") || grid.transform.GetChild(i).name.Contains("Entry Room")) {
+                Destroy(grid.transform.GetChild(i).gameObject);
+            }
+        }
+        roomTemplates.GetComponent<RoomTemplates>().spawnedBoss = false;
+        roomTemplates.GetComponent<RoomTemplates>().waitTime = roomTemplates.GetComponent<RoomTemplates>().maxWaitTime;
+        roomTemplates.GetComponent<RoomTemplates>().rooms.Clear();
+        
+        GameObject entry = Instantiate(EntryRoom, new Vector3(-3, 100, 0), Quaternion.identity);
+        entry.transform.parent = grid.transform;
     }
 
     private void InputHandler()
@@ -113,46 +150,32 @@ public class PlayerSystem : MonoBehaviour
         }
 
         if (Input.GetMouseButtonDown(0)) {
-            Debug.Log("Can Shoot: " + _canShoot + " | Ammo: " + ammo + " | Health: " + health);
-            if (!_canShoot || ammo <= 0 || health <= 0) return;
+            _playerAnimator.SetBool("IsShooting", false);
+            if (!_canShoot || ammo <= 0 || health <= 0 && _currentShootCooldown >= shootCooldown) return;
+            _currentShootCooldown = 0.0f;
             StartCoroutine(Shoot());
-            /*
-            var rayHit = Physics2D.GetRayIntersection(mainCamera.ScreenPointToRay(Input.mousePosition));
-            
-            if (!rayHit.collider) return;
-            if (rayHit.collider.CompareTag("Interactable")) {
-                
-            } else {
-                
-            }
-            */
         }
-
-        if (Input.GetMouseButtonDown(2)) {
-            
-        }
-    }
-    
-    private void HighlightInteractable()
-    {
-        var rayHit = Physics2D.GetRayIntersection(mainCamera.ScreenPointToRay(Input.mousePosition));
-        if (!rayHit.collider) return;
         
-        if (rayHit.collider.CompareTag("Interactable")) {
-            //rayHit.collider.GetComponent<SpriteRenderer>().color = Color.red;
-        } else {
-            //Debug.Log("Hovered over something else.");
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenuScene");
         }
     }
 
     private void PlayerActions()
     {
-        if (_canMove) {
-            _playerAnimator.SetBool("IsRunning", true);
+        if (_canMove && health > 0) {
+            var playerPos = mainCamera.WorldToScreenPoint(gameObject.transform.position);
+            if (Screen.safeArea.Contains(playerPos) == false) {
+                _canMove = false;
+                _isHoldingMove = false;
+                _playerAnimator.SetBool("IsRunning", false);
+                return;
+            }
             if (_isHoldingMove) {
                 _targetPosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
                 _targetPosition.z = 0;
             }
+            _playerAnimator.SetBool("IsRunning", true);
             player.transform.position = Vector3.MoveTowards(player.transform.position, _targetPosition, speed * Time.deltaTime);
             FlipPlayer();
             if (player.transform.position == _targetPosition && !_isHoldingMove) {
@@ -172,22 +195,51 @@ public class PlayerSystem : MonoBehaviour
         health = _maxHealth;
         playerHud.UpdateAmmo((float)ammo / _maxAmmo);
         playerHud.UpdateHealth(health / _maxHealth);
+        _playerAnimationClips = _playerAnimator.runtimeAnimatorController.animationClips;
     }
     
     void Update()
     {
-        HighlightInteractable();
+        _currentShootCooldown += Time.deltaTime;
+        _currentRefillTime += Time.deltaTime;
+
+        if (player.GetComponent<Rigidbody2D>().velocity.magnitude > 0) {
+            player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        }
+
         InputHandler();
         PlayerActions();
         FlipPlayer();
         GunRotation();
         
-        if (ammo <= 0) {
-            _playerAnimator.SetBool("IsShooting", false);
+        if (ammo <= 0 && health > 0 && _currentRefillTime >= refillTime) {
+            _currentRefillTime = 0.0f;
+            _canShoot = false;
             StartCoroutine(RefillAmmo());
         }
-        if (health <= 0) {
+        if (health <= 0 && _playerAnimator.GetBool("IsDead") == false) {
             _playerAnimator.SetBool("IsDead", true);
+            StartCoroutine(SpawnBackPlayer());
+        }
+    }
+    
+    public IEnumerator TakeDamage(float damage)
+    {
+        health -= damage;
+        playerHud.UpdateHealth(health / _maxHealth);
+        player.GetComponent<SpriteRenderer>().color = new Color(0.69f, 0.24f, 0.32f, 1);
+        yield return new WaitForSeconds(0.1f);
+        player.GetComponent<SpriteRenderer>().color = Color.white;
+    }
+    
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("Bullet")) return;
+        if (other.gameObject.CompareTag("EnemyBullet")) {
+            Destroy(other.gameObject);
+            StartCoroutine(TakeDamage(other.gameObject.GetComponent<Bullet>().damage));
+        } else if (other.gameObject.CompareTag("Ennemy")) {
+            StartCoroutine(TakeDamage(other.gameObject.GetComponent<SimpleEnemy>().gunDamage));
         }
     }
 }

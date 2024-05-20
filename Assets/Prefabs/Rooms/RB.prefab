@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2342588412736575107}
   - component: {fileID: 5217265404223996492}
+  - component: {fileID: -4691936204914038350}
+  - component: {fileID: 5947506928988869117}
   m_Layer: 0
   m_Name: RB
   m_TagString: Untagged
@@ -89,6 +91,36 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-4691936204914038350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 371313885304692448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 928b0f9b88e455f4383294a5c7ae9fb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enemies:
+  - {fileID: 7447932446496210787, guid: 5e42a38a507b09146985a264441d8ac2, type: 3}
+  _maxEnemies: 4
+  _minEnemies: 2
+  _spawnTopLeftCorner: {x: -7.59, y: 2.89, z: 0}
+  _spawnBottomRightCorner: {x: 7.59, y: -2.89, z: 0}
+--- !u!114 &5947506928988869117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 371313885304692448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c65416b4fd9c0654085861cd540ad035, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1656424596016281940
 GameObject:
   m_ObjectHideFlags: 0
@@ -1667,7 +1699,7 @@ GameObject:
   - component: {fileID: 5790570049224902957}
   - component: {fileID: 2371131282209530860}
   - component: {fileID: 3378208597004448322}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Bottom SpawnPoint
   m_TagString: SpawnPoint
   m_Icon: {fileID: 4162164826716764455, guid: 0000000000000000d000000000000000, type: 0}
@@ -1704,6 +1736,7 @@ MonoBehaviour:
   openingDirection: 2
   spawned: 0
   waitTime: 4
+  closedRoom: {fileID: 1812632243771289918, guid: cfd0cfa7173a37442a8630d2a3db2bdc, type: 3}
 --- !u!61 &2371131282209530860
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1788,7 +1821,7 @@ GameObject:
   - component: {fileID: 1668437390464889293}
   - component: {fileID: 1104193289897432835}
   - component: {fileID: 5469878759666222249}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Destroyer
   m_TagString: SpawnPoint
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
@@ -1906,8 +1939,6 @@ GameObject:
   - component: {fileID: 4903921258444779685}
   - component: {fileID: 2087080313103420157}
   - component: {fileID: 2149695449437411544}
-  - component: {fileID: 919338332900310096}
-  - component: {fileID: 9154213211639853067}
   m_Layer: 0
   m_Name: Walls
   m_TagString: Untagged
@@ -2647,76 +2678,6 @@ TilemapCollider2D:
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0
   m_UseDelaunayMesh: 0
---- !u!50 &919338332900310096
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2388078299099610709}
-  m_BodyType: 2
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!66 &9154213211639853067
-CompositeCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2388078299099610709}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_GeometryType: 0
-  m_GenerationType: 0
-  m_EdgeRadius: 0
-  m_ColliderPaths: []
-  m_CompositePaths:
-    m_Paths: []
-  m_VertexDistance: 0.0005
-  m_OffsetDistance: 0.00005
-  m_UseDelaunayMesh: 0
-  m_CompositeGameObject: {fileID: 2388078299099610709}
 --- !u!1 &5375365430440687870
 GameObject:
   m_ObjectHideFlags: 0
@@ -2729,7 +2690,7 @@ GameObject:
   - component: {fileID: 3908057171178530939}
   - component: {fileID: 7546395632757059667}
   - component: {fileID: 2759243521596451231}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Right SpawnPoint
   m_TagString: SpawnPoint
   m_Icon: {fileID: 4162164826716764455, guid: 0000000000000000d000000000000000, type: 0}
@@ -2766,6 +2727,7 @@ MonoBehaviour:
   openingDirection: 3
   spawned: 0
   waitTime: 4
+  closedRoom: {fileID: 1812632243771289918, guid: cfd0cfa7173a37442a8630d2a3db2bdc, type: 3}
 --- !u!61 &7546395632757059667
 BoxCollider2D:
   m_ObjectHideFlags: 0

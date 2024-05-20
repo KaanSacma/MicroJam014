@@ -11,6 +11,8 @@ TagManager:
   - Rooms
   - GridWorld
   - Floor
+  - EnemyBullet
+  - Bullet
   layers:
   - Default
   - TransparentFX

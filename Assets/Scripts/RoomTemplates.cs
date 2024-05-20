@@ -12,31 +12,42 @@ public class RoomTemplates : MonoBehaviour
     
     public List<GameObject> rooms;
     
+    private Transform _parent;
+    
     public float waitTime;
-    private bool _spawnedBoss = false;
+    public float maxWaitTime;
+    public bool spawnedBoss = false;
     public GameObject[] bossRooms;
+    private GameObject _bossroom;
     
     private void SpawnBossRoom()
     {
         if (rooms[rooms.Count - 1].name.Contains("T")) {
-            Instantiate(bossRooms[0], rooms[rooms.Count - 1].transform.position, Quaternion.identity);
+            _bossroom = Instantiate(bossRooms[0], rooms[rooms.Count - 1].transform.position, Quaternion.identity);
         } else if (rooms[rooms.Count - 1].name.Contains("B")) {
-            Instantiate(bossRooms[1], rooms[rooms.Count - 1].transform.position, Quaternion.identity);
+            _bossroom = Instantiate(bossRooms[1], rooms[rooms.Count - 1].transform.position, Quaternion.identity);
         } else if (rooms[rooms.Count - 1].name.Contains("L")) {
-            Instantiate(bossRooms[2], rooms[rooms.Count - 1].transform.position, Quaternion.identity);
+            _bossroom = Instantiate(bossRooms[2], rooms[rooms.Count - 1].transform.position, Quaternion.identity);
         } else if (rooms[rooms.Count - 1].name.Contains("R")) {
-            Instantiate(bossRooms[3], rooms[rooms.Count - 1].transform.position, Quaternion.identity);
+            _bossroom = Instantiate(bossRooms[3], rooms[rooms.Count - 1].transform.position, Quaternion.identity);
         }
+        _bossroom.transform.parent = _parent;
+    }
+    
+    private void Start()
+    {
+        _parent = GameObject.FindGameObjectWithTag("GridWorld").transform;
+        maxWaitTime = waitTime;
     }
 
     private void Update()
     {
-        if (waitTime <= 0 && _spawnedBoss == false) {
+        if (waitTime <= 0 && spawnedBoss == false) {
             for (int i = 0; i < rooms.Count; i++) {
                 if (i == rooms.Count - 1) {
                     SpawnBossRoom();
                     Destroy(rooms[rooms.Count - 1]);
-                    _spawnedBoss = true;
+                    spawnedBoss = true;
                 }
             }
         } else {

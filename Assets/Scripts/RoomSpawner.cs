@@ -17,6 +17,8 @@ public class RoomSpawner : MonoBehaviour
     private Transform _parent;
     private GameObject _room;
     
+    public GameObject closedRoom;
+    
     void Start()
     {
         Destroy(gameObject, waitTime);
@@ -50,7 +52,11 @@ public class RoomSpawner : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("SpawnPoint") && other.GetComponent<RoomSpawner>()) {
-            if (other.GetComponent<RoomSpawner>().spawned && spawned == false) {
+            if (other.GetComponent<RoomSpawner>().spawned == false && spawned == false) {
+                _room = Instantiate(closedRoom, transform.position, Quaternion.identity);
+                _room.transform.parent = _parent;
+                Destroy(gameObject);
+            }  else if (other.GetComponent<RoomSpawner>().spawned && spawned == false) {
                 if (other.name == "Entry Room") return;
                 Destroy(other.gameObject);
             } else if (spawned && other.GetComponent<RoomSpawner>().spawned == false) {

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6870913212828482776}
   - component: {fileID: 5730608092322383777}
   - component: {fileID: 2708275913466075598}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Top SpawnPoint
   m_TagString: SpawnPoint
   m_Icon: {fileID: 4162164826716764455, guid: 0000000000000000d000000000000000, type: 0}
@@ -49,6 +49,7 @@ MonoBehaviour:
   openingDirection: 1
   spawned: 0
   waitTime: 4
+  closedRoom: {fileID: 1812632243771289918, guid: cfd0cfa7173a37442a8630d2a3db2bdc, type: 3}
 --- !u!61 &5730608092322383777
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -131,6 +132,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4981175711582039009}
   - component: {fileID: 6636607614381738859}
+  - component: {fileID: 4373120266515512052}
+  - component: {fileID: 2792847771689966763}
   m_Layer: 0
   m_Name: TB
   m_TagString: Untagged
@@ -210,6 +213,36 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &4373120266515512052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4305011517691636372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 928b0f9b88e455f4383294a5c7ae9fb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enemies:
+  - {fileID: 7447932446496210787, guid: 5e42a38a507b09146985a264441d8ac2, type: 3}
+  _maxEnemies: 4
+  _minEnemies: 2
+  _spawnTopLeftCorner: {x: -7.59, y: 2.89, z: 0}
+  _spawnBottomRightCorner: {x: 7.59, y: -2.89, z: 0}
+--- !u!114 &2792847771689966763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4305011517691636372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c65416b4fd9c0654085861cd540ad035, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5226169482314991142
 GameObject:
   m_ObjectHideFlags: 0
@@ -222,7 +255,7 @@ GameObject:
   - component: {fileID: 37030190445921923}
   - component: {fileID: 2084697814955262171}
   - component: {fileID: 583322806246548510}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Destroyer
   m_TagString: SpawnPoint
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
@@ -340,8 +373,6 @@ GameObject:
   - component: {fileID: 1215640218786668508}
   - component: {fileID: 2607998676491300163}
   - component: {fileID: 1790687353739525009}
-  - component: {fileID: 591345040543751326}
-  - component: {fileID: 4550510956519439580}
   m_Layer: 0
   m_Name: Walls
   m_TagString: Untagged
@@ -1071,76 +1102,6 @@ TilemapCollider2D:
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0
   m_UseDelaunayMesh: 0
---- !u!50 &591345040543751326
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5674853511019586530}
-  m_BodyType: 2
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!66 &4550510956519439580
-CompositeCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5674853511019586530}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_GeometryType: 0
-  m_GenerationType: 0
-  m_EdgeRadius: 0
-  m_ColliderPaths: []
-  m_CompositePaths:
-    m_Paths: []
-  m_VertexDistance: 0.0005
-  m_OffsetDistance: 0.00005
-  m_UseDelaunayMesh: 0
-  m_CompositeGameObject: {fileID: 5674853511019586530}
 --- !u!1 &6653900246891495487
 GameObject:
   m_ObjectHideFlags: 0
@@ -2729,7 +2690,7 @@ GameObject:
   - component: {fileID: 918771465207317299}
   - component: {fileID: 5548904086774075207}
   - component: {fileID: 1558838681698072857}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Bottom SpawnPoint
   m_TagString: SpawnPoint
   m_Icon: {fileID: 4162164826716764455, guid: 0000000000000000d000000000000000, type: 0}
@@ -2766,6 +2727,7 @@ MonoBehaviour:
   openingDirection: 2
   spawned: 0
   waitTime: 4
+  closedRoom: {fileID: 1812632243771289918, guid: cfd0cfa7173a37442a8630d2a3db2bdc, type: 3}
 --- !u!61 &5548904086774075207
 BoxCollider2D:
   m_ObjectHideFlags: 0

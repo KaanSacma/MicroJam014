@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7834209164986884449}
   - component: {fileID: 6831335340023892331}
   - component: {fileID: 1314497782572916683}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Destroyer
   m_TagString: SpawnPoint
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
@@ -221,8 +221,6 @@ GameObject:
   - component: {fileID: 2955619164724193571}
   - component: {fileID: 2082519113025311744}
   - component: {fileID: 857030235157613019}
-  - component: {fileID: 6978528390043274071}
-  - component: {fileID: 7064130976496926777}
   m_Layer: 0
   m_Name: Walls
   m_TagString: Untagged
@@ -912,76 +910,6 @@ TilemapCollider2D:
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0
   m_UseDelaunayMesh: 0
---- !u!50 &6978528390043274071
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3963629205463634657}
-  m_BodyType: 2
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!66 &7064130976496926777
-CompositeCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3963629205463634657}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_GeometryType: 0
-  m_GenerationType: 0
-  m_EdgeRadius: 0
-  m_ColliderPaths: []
-  m_CompositePaths:
-    m_Paths: []
-  m_VertexDistance: 0.0005
-  m_OffsetDistance: 0.00005
-  m_UseDelaunayMesh: 0
-  m_CompositeGameObject: {fileID: 3963629205463634657}
 --- !u!1 &4239268368514887173
 GameObject:
   m_ObjectHideFlags: 0
@@ -994,7 +922,7 @@ GameObject:
   - component: {fileID: 4428766105375519715}
   - component: {fileID: 5154383837847925375}
   - component: {fileID: 1589944650804796086}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Bottom SpawnPoint
   m_TagString: SpawnPoint
   m_Icon: {fileID: 4162164826716764455, guid: 0000000000000000d000000000000000, type: 0}
@@ -1031,6 +959,7 @@ MonoBehaviour:
   openingDirection: 2
   spawned: 0
   waitTime: 4
+  closedRoom: {fileID: 1812632243771289918, guid: cfd0cfa7173a37442a8630d2a3db2bdc, type: 3}
 --- !u!61 &5154383837847925375
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1115,7 +1044,7 @@ GameObject:
   - component: {fileID: 764734364434589194}
   - component: {fileID: 6410027161966197407}
   - component: {fileID: 1794130053109820135}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Right SpawnPoint
   m_TagString: SpawnPoint
   m_Icon: {fileID: 4162164826716764455, guid: 0000000000000000d000000000000000, type: 0}
@@ -1152,6 +1081,7 @@ MonoBehaviour:
   openingDirection: 3
   spawned: 0
   waitTime: 4
+  closedRoom: {fileID: 1812632243771289918, guid: cfd0cfa7173a37442a8630d2a3db2bdc, type: 3}
 --- !u!61 &6410027161966197407
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1459,8 +1389,8 @@ Tilemap:
   - first: {x: 2, y: 96, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 0
-      m_TileSpriteIndex: 0
+      m_TileIndex: 1
+      m_TileSpriteIndex: 1
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -2728,18 +2658,18 @@ Tilemap:
       m_AllTileFlags: 1073741825
   m_AnimatedTiles: {}
   m_TileAssetArray:
-  - m_RefCount: 61
+  - m_RefCount: 60
     m_Data: {fileID: 11400000, guid: c13f666eaec92b64dad506851a97c583, type: 2}
-  - m_RefCount: 85
+  - m_RefCount: 86
     m_Data: {fileID: 11400000, guid: aee15b44e6d7c054787aefb32afcb0a5, type: 2}
   - m_RefCount: 0
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
   m_TileSpriteArray:
-  - m_RefCount: 61
+  - m_RefCount: 60
     m_Data: {fileID: -1458356031, guid: 4fbd792834c0c5d4284ad0a418075b16, type: 3}
-  - m_RefCount: 85
+  - m_RefCount: 86
     m_Data: {fileID: 919082684, guid: 4fbd792834c0c5d4284ad0a418075b16, type: 3}
   - m_RefCount: 0
     m_Data: {fileID: 0}
@@ -2852,7 +2782,7 @@ GameObject:
   - component: {fileID: 3479578555806213347}
   - component: {fileID: 2305324925738916547}
   - component: {fileID: 3828528297818591752}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Left SpawnPoint
   m_TagString: SpawnPoint
   m_Icon: {fileID: 4162164826716764455, guid: 0000000000000000d000000000000000, type: 0}
@@ -2889,6 +2819,7 @@ MonoBehaviour:
   openingDirection: 4
   spawned: 0
   waitTime: 4
+  closedRoom: {fileID: 1812632243771289918, guid: cfd0cfa7173a37442a8630d2a3db2bdc, type: 3}
 --- !u!61 &2305324925738916547
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2973,7 +2904,7 @@ GameObject:
   - component: {fileID: 4415563576914107638}
   - component: {fileID: 954481731635809749}
   - component: {fileID: 7664662518960247202}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Top SpawnPoint
   m_TagString: SpawnPoint
   m_Icon: {fileID: 4162164826716764455, guid: 0000000000000000d000000000000000, type: 0}
@@ -3010,6 +2941,7 @@ MonoBehaviour:
   openingDirection: 1
   spawned: 0
   waitTime: 4
+  closedRoom: {fileID: 1812632243771289918, guid: cfd0cfa7173a37442a8630d2a3db2bdc, type: 3}
 --- !u!61 &954481731635809749
 BoxCollider2D:
   m_ObjectHideFlags: 0
